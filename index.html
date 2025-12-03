@@ -1,3 +1,5 @@
+
+
 +<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -402,13 +404,43 @@
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
-            .hero { flex-direction: column; text-align: center; }
-            .hero-text { padding: 0; margin-bottom: 40px; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero-img { width: 100%; height: 300px; }
-            .admin-modal-content { width: 95%; padding: 20px; }
+            .container { padding: 0 15px; }
+            header { padding: 15px 0; }
+            .logo { font-size: 1.2rem; }
+            nav { flex-direction: column; gap: 15px; text-align: center; }
+            .hero { padding-top: 60px; }
+            .hero .container { grid-template-columns: 1fr; gap: 30px; }
+            .hero-text { text-align: center; padding: 0; }
+            .hero h1 { font-size: 2rem; line-height: 1.2; }
+            .hero p { font-size: 1rem; }
+            .hero-img { height: 250px; }
+            .stats { flex-direction: column; gap: 20px; text-align: center; }
+            .stat-number { font-size: 2.5rem; }
+            .section-header h2 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; gap: 20px; }
+            .card { max-width: 100%; }
+            .cert-row { flex-direction: column; text-align: center; gap: 10px; }
+            .timeline::after { left: 15px; }
+            .timeline-item { padding-left: 30px; }
+            .timeline-item::after { left: 7px; }
+            .tech-item { padding: 20px; }
+            .chart-container { padding: 20px; }
+            .admin-modal-content { width: 95%; padding: 20px; max-width: none; }
             .admin-tabs { flex-direction: column; }
-            .login-modal-content { width: 95%; padding: 30px; }
+            .login-modal-content { width: 95%; padding: 30px; max-width: none; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero p { font-size: 0.9rem; }
+            .btn { padding: 10px 20px; font-size: 0.9rem; }
+            .section-header h2 { font-size: 1.8rem; }
+            .stat-number { font-size: 2rem; }
+            .card-content { padding: 20px; }
+            .tech-item { padding: 15px; }
+            .tech-item h4 { font-size: 0.9rem; }
+            .tech-item p { font-size: 0.8rem; }
+            footer { padding: 30px 15px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -520,6 +552,14 @@
                     <label>Year</label>
                     <input type="text" id="certYear" placeholder="e.g. 2025">
                 </div>
+                <div class="admin-form-group">
+                    <label>Description</label>
+                    <textarea id="certDescription" placeholder="Describe the certificate..."></textarea>
+                </div>
+                <div class="admin-form-group">
+                    <label>Download Link</label>
+                    <input type="text" id="certDownload" placeholder="https://example.com/cert.pdf">
+                </div>
                 <button class="btn btn-success" onclick="addCertificate()"><i class="fas fa-plus"></i> Add Certificate</button>
 
                 <h3 style="margin: 40px 0 20px; color: var(--accent);">Existing Certificates</h3>
@@ -590,6 +630,10 @@
                 <h2 class="cert-modal-title" id="modalCertTitle">Certificate Title</h2>
                 <p class="cert-modal-issuer" id="modalCertIssuer">Issuer • Year</p>
             </div>
+            <div class="cert-modal-body" style="padding: 20px; text-align: center;">
+                <p id="modalCertDescription" style="color: var(--text-muted); margin-bottom: 20px; font-size: 1rem;"></p>
+                <a id="modalCertDownload" href="#" download class="btn btn-primary" style="display: inline-block;"><i class="fas fa-download"></i> Download Certificate</a>
+            </div>
         </div>
     </div>
 
@@ -597,13 +641,13 @@
         <div class="container">
             <nav>
                 <div class="logo">Bharath<span>.Analytics</span></div>
-                <a href="#contact" class="btn btn-primary">Download Resume</a>
+                <a href="Data_Analyst_resume.pdf" download class="btn btn-primary">Download Resume</a>
             </nav>
         </div>
     </header>
 
     <section class="hero">
-        <div class="container" style="display: flex; align-items: center; gap: 50px; flex-wrap: wrap;">
+        <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
             <div class="hero-text">
                 <h1 id="bio-name">Loading...</h1>
                 <p id="bio-desc">Loading...</p>
@@ -709,6 +753,19 @@
         </div>
     </section>
 
+    <section class="container" style="margin-bottom: 80px;">
+        <div class="section-header">
+            <h2>Skills Proficiency</h2>
+            <p>Interactive visualization of my technical skills and proficiency levels</p>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; background: var(--card); border-radius: 20px; padding: 40px; border: 1px solid rgba(255,255,255,0.05); max-width: 600px; margin: 0 auto;">
+            <div class="chart-container" style="text-align: center;">
+                <h3 style="color: var(--accent); margin-bottom: 20px; font-size: 1.5rem;">Skills Proficiency Heat Map</h3>
+                <canvas id="skillsHeatChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </section>
+
     <div class="section-header" id="contact">
         <h2>Let's Connect</h2>
         <p>Currently open for Data Analyst roles in Bengaluru.</p>
@@ -786,7 +843,8 @@
                     {name: "Power BI", proficiency: 95},
                     {name: "Machine Learning", proficiency: 85},
                     {name: "MongoDB", proficiency: 80},
-                    {name: "Data Viz", proficiency: 90}
+                    {name: "Data Viz", proficiency: 90},
+                    {name: "Excel", proficiency: 40}
                 ]
             },
 
@@ -818,16 +876,23 @@
                     tags: ["Research", "AI Concepts", "Presentation"],
                     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
                     link: "#"
+                },
+                {
+                    title: "Pet-Voice-Translator",
+                    desc: "The project aims to enhance pet care by bridging the communication gap using AI-driven voice analysis integrated with an e-commerce platform for immediate action.",
+                    tags: ["JavaScript", "Python", "React.js", "Node.js", "TensorFlow & Keras", "Librosa", "NumPy", "MongoDB", "RESTful API Design", "UML Modeling"],
+                    image: "https://th.bing.com/th/id/R.1ccff62d6f8467c66c3599d4e44e6ab4?rik=zhirHJxP8Nn4Pg&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2fc%2f1%2f9%2f370292.jpg&ehk=bomed0XVW7%2fO2HxQ5rG5TZG0AvOFe9d7jrofIut0En0%3d&risl=&pid=ImgRaw&r=0",
+                    link: "#"
                 }
             ],
 
             certificates: [
-                { name: "Power BI Certification", issuer: "Office Master", year: "2025" },
-                { name: "Excel Basics for Data Analysis", issuer: "IBM / Coursera", year: "2025" },
-                { name: "Copilot for Power BI", issuer: "Microsoft", year: "2025" },
-                { name: "Azure AI Fundamentals", issuer: "Infosys Springboard", year: "2025" },
-                { name: "Database Management System", issuer: "Infosys", year: "2025" },
-                { name: "Agentic Prompt Engineering", issuer: "UiPath", year: "2025" }
+                { name: "Power BI Certification", issuer: "Office Master", year: "2025", description: "Comprehensive certification covering Power BI data modeling, visualization, and dashboard creation.", download: "#" },
+                { name: "Excel Basics for Data Analysis", issuer: "IBM / Coursera", year: "2025", description: "Fundamental skills in Excel for data analysis, including formulas, pivot tables, and data visualization.", download: "#" },
+                { name: "Copilot for Power BI", issuer: "Microsoft", year: "2025", description: "Advanced certification on using Copilot features in Power BI for enhanced productivity.", download: "#" },
+                { name: "Azure AI Fundamentals", issuer: "Infosys Springboard", year: "2025", description: "Introduction to Azure AI services and machine learning concepts.", download: "#" },
+                { name: "Database Management System", issuer: "Infosys", year: "2025", description: "Comprehensive understanding of database design, SQL, and data management principles.", download: "#" },
+                { name: "Agentic Prompt Engineering", issuer: "UiPath", year: "2025", description: "Skills in creating effective prompts for AI agents and automation workflows.", download: "#" }
             ],
 
             journey: [
@@ -917,12 +982,16 @@
             const name = document.getElementById('certName').value;
             const issuer = document.getElementById('certIssuer').value;
             const year = document.getElementById('certYear').value;
+            const description = document.getElementById('certDescription').value;
+            const download = document.getElementById('certDownload').value;
 
             if (name && issuer && year) {
-                portfolioData.certificates.push({ name, issuer, year });
+                portfolioData.certificates.push({ name, issuer, year, description, download });
                 document.getElementById('certName').value = '';
                 document.getElementById('certIssuer').value = '';
                 document.getElementById('certYear').value = '';
+                document.getElementById('certDescription').value = '';
+                document.getElementById('certDownload').value = '';
                 saveData();
                 updateAdminLists();
             } else {
@@ -1087,6 +1156,7 @@
 
             // Chart
             drawChart();
+            drawHeatChart();
         }
 
         function drawChart() {
@@ -1122,6 +1192,126 @@
                     },
                     plugins: { legend: { display: false } }
                 }
+            });
+        }
+
+        function drawHeatChart() {
+            const canvas = document.getElementById('skillsHeatChart');
+            canvas.width = 400;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+            if(window.myHeatChart) window.myHeatChart.destroy();
+
+            const skills = portfolioData.personal.skills;
+            const labels = skills.map(skill => skill.name);
+            const data = skills.map(skill => skill.proficiency);
+
+            // Color palette from user specification
+            const colorPalette = ['#FF5733', '#33FF57', '#3357FF', '#FF33A6', '#FFBD33', '#33FFF6', '#FFC300', '#C70039', '#900C3F', '#581845'];
+
+            const backgroundColors = skills.map((skill, index) => colorPalette[index % colorPalette.length]);
+            const borderColors = backgroundColors;
+
+            // Calculate average proficiency for center text
+            const averageProficiency = Math.round(data.reduce((a, b) => a + b, 0) / data.length);
+
+            window.myHeatChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Proficiency Level',
+                        data: data,
+                        backgroundColor: backgroundColors,
+                        borderColor: borderColors,
+                        borderWidth: 3,
+                        hoverBorderWidth: 5,
+                        hoverBorderColor: '#fff',
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    cutout: '60%', // Creates the doughnut hole
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#94a3b8',
+                                font: { size: 12 },
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(11, 15, 25, 0.9)',
+                            titleColor: '#0ea5e9',
+                            bodyColor: '#e2e8f0',
+                            borderColor: 'rgba(14, 165, 233, 0.3)',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    const skill = skills[context.dataIndex];
+                                    return `${skill.name}: ${skill.proficiency}% Proficiency`;
+                                },
+                                afterLabel: function(context) {
+                                    const skill = skills[context.dataIndex];
+                                    let level = 'Beginner';
+                                    if (skill.proficiency >= 90) level = 'Expert';
+                                    else if (skill.proficiency >= 80) level = 'Advanced';
+                                    else if (skill.proficiency >= 70) level = 'Intermediate';
+                                    return `Level: ${level}`;
+                                }
+                            }
+                        },
+                        // Custom center text plugin
+                        centerText: {
+                            display: true,
+                            text: `${averageProficiency}%`,
+                            subtext: 'Average Proficiency',
+                            color: '#0ea5e9',
+                            fontSize: 24,
+                            subFontSize: 12
+                        }
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true,
+                        duration: 2000,
+                        easing: 'easeOutBounce'
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    }
+                },
+                plugins: [{
+                    id: 'centerText',
+                    beforeDraw: function(chart) {
+                        const { ctx, chartArea: { left, right, top, bottom, width, height } } = chart;
+                        ctx.save();
+
+                        const centerX = (left + right) / 2;
+                        const centerY = (top + bottom) / 2;
+
+                        // Main text
+                        ctx.font = 'bold 24px Outfit';
+                        ctx.fillStyle = '#0ea5e9';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(`${averageProficiency}%`, centerX, centerY - 10);
+
+                        // Subtext
+                        ctx.font = '14px Outfit';
+                        ctx.fillStyle = '#94a3b8';
+                        ctx.fillText('Average Proficiency', centerX, centerY + 15);
+
+                        ctx.restore();
+                    }
+                }]
             });
         }
 
@@ -1166,6 +1356,8 @@
 
             document.getElementById('modalCertTitle').textContent = cert.name;
             document.getElementById('modalCertIssuer').textContent = `${cert.issuer} • ${cert.year}`;
+            document.getElementById('modalCertDescription').textContent = cert.description || '';
+            document.getElementById('modalCertDownload').href = cert.download || '#';
             certModal.style.display = 'block';
         }
 
